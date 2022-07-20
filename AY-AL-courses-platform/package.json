@@ -4,7 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon server.js",
+=======
+    "start":"nodemon server.js",
+>>>>>>> c0656097868f700bcb29c79ecafb93c3a46c28d7
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +18,9 @@
     "firebase-admin": "^11.0.0",
     "nodemon": "^2.0.19"
   }
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> c0656097868f700bcb29c79ecafb93c3a46c28d7
 }
