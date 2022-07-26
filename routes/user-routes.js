@@ -12,7 +12,7 @@ const {addUser,
        forgetPassword,
        get_User_By_Token,
       } = require('../controllers/userController.ts');
-const { authenticateToken } = require('../Verify/UserVerfiy.ts');
+const { authenticateToken } = require('../Verify/UserVerfiy.js');
 
 const router = express.Router();
 
@@ -32,4 +32,4 @@ module.exports = {
     routes: router
 }
 
-export{}
+
