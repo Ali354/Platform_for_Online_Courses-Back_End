@@ -1,7 +1,7 @@
 'use strict';
 // require 'firebase/auth';
 const firebase = require('../db.ts');
-const User = require('../models/user.ts');
+const User = require('../models/user.js');
 const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
 
