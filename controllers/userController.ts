@@ -6,6 +6,7 @@ const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res, next) => {
+    // console.log("GetAllUsers is running!\n");
     try {
         const users = await firestore.collection('users');
         const data = await users.get();
@@ -57,6 +58,19 @@ const addUser = async (req, res) => {
             res.status(400).send(error.message);
     }
 }
+
+// const addAli = async (req, res) => {
+//     try {
+//             const data = {"email" : "ali4@gmail.com","password" : "1235453"};
+//             var email = "ali4@gmail.com";
+//             var password = "1235453";
+//             const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
+//             await firestore.collection('users').doc().set(data);
+//             res.json(userResponse);
+//     } catch (error) {
+//             res.status(400).send(error.message);
+//     }
+// }
 const updateUser = async (req, res, next) => {
     try {
         // if(!req.body.email){
@@ -195,5 +209,6 @@ module.exports = {
     // loginUser,
     signin,
     forgetPassword,
-    get_User_By_Token
+    get_User_By_Token,
+    // addAli
 }

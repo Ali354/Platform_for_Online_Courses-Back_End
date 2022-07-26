@@ -10,7 +10,7 @@ const {addUser,
        deleteUser,
        signin,
        forgetPassword,
-       get_User_By_Token
+       get_User_By_Token,
       } = require('../controllers/userController.ts');
 const { authenticateToken } = require('../Verify/UserVerfiy.ts');
 
@@ -28,7 +28,6 @@ router.delete('/user/:id', deleteUser);
 router.post('/signin',signin);
 router.post('/forgetPassword',forgetPassword);
 router.get('/usersToken',authenticateToken,get_User_By_Token);
-
 module.exports = {
     routes: router
 }
