@@ -11,7 +11,7 @@ const {addUser,
        signin,
        forgetPassword,
        get_User_By_Token,
-      } = require('../controllers/userController.ts');
+      } = require('../controllers/userController.js');
 const { authenticateToken } = require('../Verify/UserVerfiy.js');
 
 const router = express.Router();

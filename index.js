@@ -4,9 +4,9 @@ require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const config = require('./config.ts');
-const userRoutes = require('./routes/user-routes.ts');
-const courseRoutes = require('./routes/course-routes.ts');
+const config = require('./config.js');
+const userRoutes = require('./routes/user-routes.js');
+const courseRoutes = require('./routes/course-routes.js');
 
 const app = express();
 
