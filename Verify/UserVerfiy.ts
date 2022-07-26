@@ -21,9 +21,42 @@ function authenticateToken(req, res, next) {
   // Handle error
 });
   */ 
-  
+
+// const authTokenVerifyMiddleWare = (req,res,next)=>{
+    
+//       var admin = require("firebase-admin");
+
+//       var serviceAccount = require("path/to/serviceAccountKey.json");
+
+//       admin.initializeApp({
+//         credential: admin.credential.cert(serviceAccount)
+//       });
+
+//       const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
+//       if(!tokenString)
+//         res.send("No header provided");
+//       else if(!tokenString[1])
+//         res.send("No Token provided");
+//       else {
+//         const {getAuth} = require ('firebase-admin/auth');
+//         getAuth()
+//         .verifyIdToken(tokenString[1])
+//         .then((decodedToken) => {
+//           const uid = decodedToken.uid;
+//           console.log(uid);
+//           next();
+//           // ...
+//         })
+//         .catch((error) => {
+//           // Handle error
+//         });
+//       }
+
+// }
+
 module.exports = { 
-    authenticateToken
+    authenticateToken,
+    // authTokenVerifyMiddleWare
 }
 
 export{}
