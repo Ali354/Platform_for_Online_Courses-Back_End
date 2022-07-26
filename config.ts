@@ -34,3 +34,5 @@ module.exports = {
         appId: APP_ID
     }
 }
+
+export{}

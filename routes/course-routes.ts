@@ -21,3 +21,4 @@ router.delete('/course/:id', deleteCourse);
 module.exports = {
     routes: router
 }
+export{}

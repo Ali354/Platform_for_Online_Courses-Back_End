@@ -1,6 +1,6 @@
 'use strict';
 // require 'firebase/auth';
-const firebase = require('../db.ts');
+var firebase = require('../db.ts');
 const Course = require('../models/course.ts');
 const firestore = firebase.firestore();
 
@@ -93,3 +93,4 @@ module.exports = {
     updateCourse,
     deleteCourse
 }
+export{}

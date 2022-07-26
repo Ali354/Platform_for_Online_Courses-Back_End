@@ -31,3 +31,5 @@ router.get('/usersToken',authenticateToken,get_User_By_Token);
 module.exports = {
     routes: router
 }
+
+export{}

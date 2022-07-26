@@ -21,3 +21,5 @@ app.use('/api', courseRoutes.routes);
 
 
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
+
+export{}
