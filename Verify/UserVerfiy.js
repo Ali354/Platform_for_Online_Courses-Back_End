@@ -31,8 +31,10 @@ const authTokenVerifyMiddleWare = (req,res,next)=>{
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
-
-      const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
+      const authHeader = req.headers['authorization']
+      const tokenString = authHeader && authHeader.split(' ')[1]
+   
+      // const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
       if(!tokenString)
         res.send("No header provided");
       else if(!tokenString[1])
