@@ -12,7 +12,7 @@ const {addUser,
        forgetPassword,
        get_User_By_Token,
       } = require('../controllers/userController.js');
-const { authenticateToken,authTokenVerifyMiddleWare } = require('../Verify/UserVerfiy.js');
+const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
 
 const router = express.Router();
 
