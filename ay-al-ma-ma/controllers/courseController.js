@@ -1,5 +1,4 @@
 'use strict';
-// require 'firebase/auth';
 var firebase = require('../db.js');
 const Course = require('../models/course.js');
 const firestore = firebase.firestore();

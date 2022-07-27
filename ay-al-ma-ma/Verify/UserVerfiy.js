@@ -14,53 +14,35 @@ function authenticateToken(req, res, next) {
     })
   }
 
-  /*
-  firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-  // Send token to your backend via HTTPS
-  // ...
-}).catch(function(error) {
-  // Handle error
-});
-  */ 
 
 const authTokenVerifyMiddleWare = (req,res,next)=>{
-    console.log("1 ");
       var admin = require("firebase-admin");
-
-      var serviceAccount = require("path/to/serviceAccountKey.json");
-
+      var serviceAccount = require("../ay-al-courses-platform-firebase-adminsdk-us5c8-3a192a4357.json");
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
-      console.log("2 ");
-
-      const authHeader = req.headers['authorization']
-      const tokenString = authHeader && authHeader.split(' ')[1]
-      // const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
+      // const authHeader = req.headers['authorization']
+      // const tokenString = authHeader && authHeader.split(' ')[1]
+      const token =  req.headers.authorization.split('Bearer ')[1];
+      const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
       if(!tokenString)
         res.send("No header provided");
       else if(!tokenString[1])
         res.send("No Token provided");
       else {
-        console.log("3 ");
-
         const {getAuth} = require ('firebase-admin/auth');
         getAuth()
         .verifyIdToken(tokenString[1])
-        .then(() => {
-          // const uid = decodedToken.uid;
-          console.log("uid : 123");
+        .then((decodedToken) => {
+           const email = decodedToken.email;
+          console.log(email);
           next();
-          // ...
         })
         .catch((error) => {
           res.send("!!! "+error.message);
-          // Handle error
         });
       }
-
 }
-
 module.exports = { 
     authenticateToken,
     authTokenVerifyMiddleWare
