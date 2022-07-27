@@ -22,40 +22,41 @@ function authenticateToken(req, res, next) {
 });
   */ 
 
-// const authTokenVerifyMiddleWare = (req,res,next)=>{
+const authTokenVerifyMiddleWare = (req,res,next)=>{
     
-//       var admin = require("firebase-admin");
+      var admin = require("firebase-admin");
 
-//       var serviceAccount = require("path/to/serviceAccountKey.json");
+      var serviceAccount = require("path/to/serviceAccountKey.json");
 
-//       admin.initializeApp({
-//         credential: admin.credential.cert(serviceAccount)
-//       });
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+      });
 
-//       const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
-//       if(!tokenString)
-//         res.send("No header provided");
-//       else if(!tokenString[1])
-//         res.send("No Token provided");
-//       else {
-//         const {getAuth} = require ('firebase-admin/auth');
-//         getAuth()
-//         .verifyIdToken(tokenString[1])
-//         .then((decodedToken) => {
-//           const uid = decodedToken.uid;
-//           console.log(uid);
-//           next();
-//           // ...
-//         })
-//         .catch((error) => {
-//           // Handle error
-//         });
-//       }
+      const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
+      if(!tokenString)
+        res.send("No header provided");
+      else if(!tokenString[1])
+        res.send("No Token provided");
+      else {
+        const {getAuth} = require ('firebase-admin/auth');
+        getAuth()
+        .verifyIdToken(tokenString[1])
+        .then((decodedToken) => {
+          const uid = decodedToken.uid;
+          console.log(uid);
+          next();
+          // ...
+        })
+        .catch((error) => {
+          res.send("!!! "+error.message);
+          // Handle error
+        });
+      }
 
-// }
+}
 
 module.exports = { 
-    authenticateToken
-    // authTokenVerifyMiddleWare
+    authenticateToken,
+    authTokenVerifyMiddleWare
 }
 
