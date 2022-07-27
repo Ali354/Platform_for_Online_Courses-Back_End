@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
   */ 
 
 const authTokenVerifyMiddleWare = (req,res,next)=>{
-    
+    console.log("1 ");
       var admin = require("firebase-admin");
 
       var serviceAccount = require("path/to/serviceAccountKey.json");
@@ -31,6 +31,8 @@ const authTokenVerifyMiddleWare = (req,res,next)=>{
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
+      console.log("2 ");
+
       const authHeader = req.headers['authorization']
       const tokenString = authHeader && authHeader.split(' ')[1]
       // const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "):null;
@@ -39,6 +41,8 @@ const authTokenVerifyMiddleWare = (req,res,next)=>{
       else if(!tokenString[1])
         res.send("No Token provided");
       else {
+        console.log("3 ");
+
         const {getAuth} = require ('firebase-admin/auth');
         getAuth()
         .verifyIdToken(tokenString[1])
