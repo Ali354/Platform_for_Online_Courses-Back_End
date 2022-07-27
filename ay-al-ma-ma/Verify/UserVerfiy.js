@@ -18,7 +18,7 @@ function authenticateToken(req, res, next) {
 const authTokenVerifyMiddleWare = (req,res,next)=>{
       var admin = require("firebase-admin");
       var serviceAccount = require("../ay-al-courses-platform-firebase-adminsdk-us5c8-3a192a4357.json");
-      admin.initializeApp({
+      const app = admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
       // const authHeader = req.headers['authorization']
