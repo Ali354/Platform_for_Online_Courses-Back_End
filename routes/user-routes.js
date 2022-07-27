@@ -12,7 +12,7 @@ const {addUser,
        forgetPassword,
        get_User_By_Token,
       } = require('../controllers/userController.js');
-const { authenticateToken } = require('../Verify/UserVerfiy.js');
+const { authenticateToken,authTokenVerifyMiddleWare } = require('../Verify/UserVerfiy.js');
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
 router.post('/signin',signin);
 router.post('/forgetPassword',forgetPassword);
-router.get('/usersToken',authenticateToken,get_User_By_Token);
+router.get('/usersToken',authTokenVerifyMiddleWare,get_User_By_Token);
 module.exports = {
     routes: router
 }
