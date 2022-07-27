@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use('/api', userRoutes.routes);
 app.use('/api', courseRoutes.routes);
 
+const Port_ = process.env.PORT || config.port
 
-
-app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
+app.listen(Port_, () => console.log('App is listening on url http://localhost:' + Port_));
 
