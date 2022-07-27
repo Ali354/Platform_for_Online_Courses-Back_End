@@ -42,9 +42,9 @@ const authTokenVerifyMiddleWare = (req,res,next)=>{
         const {getAuth} = require ('firebase-admin/auth');
         getAuth()
         .verifyIdToken(tokenString[1])
-        .then((decodedToken) => {
-          const uid = decodedToken.uid;
-          console.log(uid);
+        .then(() => {
+          // const uid = decodedToken.uid;
+          console.log("uid : 123");
           next();
           // ...
         })
