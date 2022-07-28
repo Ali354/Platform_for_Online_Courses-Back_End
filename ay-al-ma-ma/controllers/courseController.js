@@ -1,4 +1,6 @@
 'use strict';
+const jwt_decode = require( "jwt-decode");
+
 var firebase = require('../db.js');
 const Course = require('../models/course.js');
 const firestore = firebase.firestore();
@@ -31,13 +33,30 @@ const getAllCourses = async (req, res, next) => {
 }
 
 const addCourse = async (req, res) => {
+    console.log("!@#$%");
     try {
             const data = req.body;
-            var title = data.title;
-            var description = data.description;
-            var lessonsNum = data.lessonsNum;
-            var defTime = data.defTime;
+             
+            // const course = new Course(
+            //     data.title,
+            //     data.description,
+            //     data.lessonsNum,
+            //     data.defTime
+            // );
+
+            const token =  req.headers.authorization.split('Bearer ')[1];
+            var decoded = jwt_decode(token);
+
+            console.log(token);
+            console.log(decoded.user_id);
+            console.log(data);
+             data.owner_id = decoded.user_id;
+             console.log(data);
+
+            // await firestore.collection('courses').doc().set(Object.assign({}, course));
+            
             await firestore.collection('courses').doc().set(data);
+
             res.json("Course added successfully");
     } catch (error) {
             res.status(400).send(error.message);
