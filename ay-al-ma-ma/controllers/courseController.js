@@ -33,7 +33,7 @@ const getAllCourses = async (req, res, next) => {
 }
 
 const addCourse = async (req, res) => {
-    console.log("!@#$%");
+    // console.log("!@#$%");
     try {
             const data = req.body;
              
@@ -44,14 +44,14 @@ const addCourse = async (req, res) => {
             //     data.defTime
             // );
 
-            const token =  req.headers.authorization.split('Bearer ')[1];
-            var decoded = jwt_decode(token);
+            // const token =  req.headers.authorization.split('Bearer ')[1];
+            // var decoded = jwt_decode(token);
 
-            console.log(token);
-            console.log(decoded.user_id);
-            console.log(data);
-             data.owner_id = decoded.user_id;
-             console.log(data);
+            // console.log(token);
+            // console.log(decoded.user_id);
+            // console.log(data);
+            //  data.owner_id = decoded.user_id;
+            //  console.log(data);
 
             // await firestore.collection('courses').doc().set(Object.assign({}, course));
             
