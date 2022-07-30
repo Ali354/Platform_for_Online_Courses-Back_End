@@ -4,8 +4,10 @@ const jwt_decode = require( "jwt-decode");
 
 const firebase = require('../db.js');
 const User = require('../models/user.js');
+const UserVerification = require('../models/UserVerification.js');
 const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
+
 
 const getAllUsers = async (req, res, next) => {
     try {

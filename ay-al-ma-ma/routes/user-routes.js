@@ -1,5 +1,7 @@
 // require('../models/user');
-
+require('dotenv').config();
+const nodemailer = require("nodemailer");
+const {v4:uuidv4}= require('uuid');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 
@@ -18,7 +20,23 @@ const router = express.Router();
 
 
 //User CRUD
-
+let transport = nodemailer.createTransport({
+    service: "gmail",
+    auth:{
+        user:process.env.AUTH_EMAIL,
+        pass:process.env.AUTH_PASS,
+    }
+})
+console.log("562");
+transport.verify((error,success)=>{
+   console.log("+6362");
+    if(error){
+        console.log(error);
+    }else{
+        console.log("Ready for message");
+        console.log(success);
+    }
+})
 
 router.post('/user', addUser);
 router.get('/users', getAllUsers);
