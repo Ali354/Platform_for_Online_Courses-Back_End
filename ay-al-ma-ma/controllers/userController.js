@@ -1,13 +1,22 @@
 'use strict';
 // require 'firebase/auth';
 const jwt_decode = require( "jwt-decode");
-
+const {v4:uuidv4}= require('uuid');
+var bcrypt = require('bcryptjs');
 const firebase = require('../db.js');
 const User = require('../models/user.js');
 const UserVerification = require('../models/UserVerification.js');
 const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth:{
+        user:process.env.AUTH_EMAIL,
+        pass:process.env.AUTH_PASS,
+    }
+})
 const path = require('path');
 const getAllUsers = async (req, res, next) => {
     try {
@@ -50,49 +59,90 @@ const getUser = async (req, res, next) => {
 }
 
 const addUser = async (req, res) => {
-    try {
+    // try {
             const data = req.body;
-            var email = data.email;
-            var password = data.password;
-            const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
-            await firestore.collection('users').doc().set(data);
-            // sendverficationEmail(userResponse,req);
-            res.json(userResponse);
-    } catch (error) {
-            res.status(400).send(error.message);
-    }
+             var email = data.email;
+             var password = data.password;
+    //         const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
+    //         await firestore.collection('users').doc().set(data);
+    //          sendverficationEmail(userResponse,res);
+    //         res.json(userResponse);
+    // } catch (error) {
+    //         res.status(400).send(error.message);
+    // }
+
+        // const saltRounds = 0;
+        // bcrypt
+        // .hash(password, saltRounds)
+        // .then((hashedPassword) => {
+            console.log(email);
+            const newUser = new User(
+                "12",
+                "qwasqwas",
+                email,
+                password,
+                false,
+            );
+            console.log(newUser.email);
+            // .save()
+            // .then((result) => {
+                sendverficationEmail(newUser, res);
+            // })
+            // .catch((err) => {
+            //     console.log(err);
+            //     res.json({
+            //     message: "An Error occuried while saving User Account!!",
+            //     });
+            // });
+        
+        // .catch((err) => {
+        //     res.json({
+        //     message: "An Error occuried while hashing password!!",
+        //     });
+        // });
+
+
 }
 
-const sendverficationEmail = ({_id,email},res)=>{
-    const currentURL = "http://localhost:8088/";
-    const uniqueString = uuidv4() + _id;
-
+const sendverficationEmail = (User,res)=>{
+    const _id = User.id;
+    const email = User.email;
+    console.log("AAAAAA");
+    const currentURL = "http://localhost:8088/api/";
+    const uniqueString = "uuidv4()_id";
+    console.log(_id);
     const mailOptions = {
         from : process.env.AUTH_EMAIL,
         to : email,
         subject: "Verify your email",
-        html: '<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b> .</p><p>Press <a href=${currentURL + "user/verify/"+_id+"/"+uniqueString}here to proceed.</p>'
+        html: '<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href="http://ay-al-ma-ma.herokuapp.com/api/user/verify/12/121212">here to proceed</a></p>'
     }
+    console.log(email);
     const saltRounds = 10;
     bcrypt
-        .hash(uniqueString,saltRounds)
-        .then((hashedUniqString)=>{
+        // .hash(uniqueString,saltRounds)
+        // .then((hashedUniqString)=>{
             const newverification = new UserVerification({
                 userId: _id,
-                uniqueString:hashedUniqString,
+                uniqueString:"122233344455",
                 createAt:Date.now(),
                 expireAt:Date.now() + 21600000,
             });
-            newverification
-                .save()
-                .then(()=>{
+            console.log("BBBBB");
+            // newverification
+            //     .save()
+            //     .then(()=>{
+                     console.log("CCCCC");
                     transporter
                         .sendMail(mailOptions)
                         .then(()=>{
+                            console.log("CCCCCC");
                             res.json({
                                 status:"PENDING",
                                 message:"Verification Email Sent",
-                            })
+                            });
+                            // console.log("CCCCC");
+
                         })
                         .catch((error)=>{
                             console.log(error);
@@ -101,21 +151,24 @@ const sendverficationEmail = ({_id,email},res)=>{
                                 message:"Verification Email Failed",
                             })
                         })
-                })
-                .catch((error)=>{
-                    console.log(error);
-                    res.json({
-                        status:"FAILED",
-                        message:"Coudnot Save Verification Email Data!",
-                    });
-                })
-        })
-        .catch(()=>{
-            res.json({
-                status:"FAILED",
-                message:"An Error occured while hashing email data",
-            })
-        })
+                // })
+                // .catch((error)=>{
+                //     console.log("QAZWSX");
+                //     console.log(error);
+                //     res.json({
+                //         status:"FAILED",
+                //         message:"Coudnot Save Verification Email Data!",
+                //     });
+                //     // console.log("CCCCCC");
+                // })
+        // })
+        // .catch(()=>{
+        //     res.json({
+        //         status:"FAILED",
+        //         message:"An Error occured while hashing email data",
+        //     })
+        // })
+        // return;
 }
 //verfiy email
 
@@ -194,19 +247,28 @@ const verfiy = async (req, res, next) => {
         res.redirect("/user/verified/error=true&message=${message}");
           })
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400);
+        // .send(error.message);
 
     }
+    return;
 }
 //verfiy page
 const verfied = async (req, res, next) =>{
     try {
-   
-res.sendFile(path.join(__dirname,"./../view/verified.html"));
+    console.log("Verified");
+    const data = req.body;
+    var email = data.email;
+    var password = data.password;
+    const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
+    await firestore.collection('users').doc().set(data);
+    res.json(userResponse);
+    res.sendFile(path.join(__dirname,"./../view/verified.html"));
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400);
+        send(error.message);
     }
-
+return;
 }
 const updateUser = async (req, res, next) => {
     try {
@@ -309,6 +371,54 @@ const get_User_By_Token = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
+
+
+///////////////////////////
+
+
+// REGISTER
+
+// router.post('/register', (req, res) => {
+    // let { email, username, password, address, isSeller } = req.body;
+    // username = username.trim();
+    // email = email.trim();
+    // password = password.trim();
+    // address = address.trim();
+  
+    // if (email == ""  username == ""  password == "" || address == "") {
+    //   res.json({
+    //     message: "Empty input fields!"
+    //   });
+    // } else if (!/^[a-zA-Z]*$/.test(username)) {
+    //   res.json({
+    //     message: "Invalid name entered!"
+    //   });
+    // }
+    // else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    //   res.json({
+    //     message: "Invalid email entered!"
+    //   });
+    // }
+    // else if (password.length < 8) {
+    //   res.json({
+    //     message: "Password is too Short!"
+    //   });
+    // } else {
+    //   User.find({ email })
+    //     .then((result) => {
+    //       if (result.length) {
+    //         res.json({
+    //           message: "User with the provided email already exists",
+    //         });
+        //   } else
+
+        
+    
+        
+
+
+///////////////////////////////////
+
 
 module.exports = {
     addUser,
