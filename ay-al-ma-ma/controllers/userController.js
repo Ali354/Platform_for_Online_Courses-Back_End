@@ -8,7 +8,7 @@ const UserVerification = require('../models/UserVerification.js');
 const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
 
-
+const path = require('path');
 const getAllUsers = async (req, res, next) => {
     try {
         const users = await firestore.collection('users');
@@ -117,7 +117,97 @@ const sendverficationEmail = ({_id,email},res)=>{
             })
         })
 }
+//verfiy email
 
+const verfiy = async (req, res, next) => {
+    try {
+          let {id,uniqueString} = req.params;
+          UserVerification.find({id})
+          .then((result)=>{
+            if(result.length > 0) {
+             const {expireAt}= result[0];
+             if(expireAt<Date.now()){
+                UserVerification.deleteOne({id})
+                .then(result=>{
+                    User
+                        .deleteOne({_id:userId})
+                        .then(()=>{
+                            let message = "Link has expired. Please Signe Up again.";
+                            res.redirect('/user/verified/error=true&message=${message}');
+                        }).catch(error=>{
+                            let message = "Cleaning User with expired unique string failed";
+                            res.redirect('/user/verified/error=true&message=${message}');
+                        })
+                    })
+                .catch((error)=>{
+                    console.log(error);
+                    let message ="An error occurred while clearing expired user verification record.";
+                    res.redirect('/user/verified/error=true&message=${message}');
+                });
+             }else{
+                bcrypt 
+    .compare(uniqueString,hashedUniqueString)
+    .then(result=>{
+        if(result){
+
+            User
+                .updateOne({_id:id},{verified:true})
+                .then(()=>{
+                    UserVerification  
+                        .deleteOne({id})
+                        .then(()=>{
+                            console.log("My Comment");
+                            res.sendFile(path.join(__dirname,"./../view/verified.html")); 
+                        })
+                        .catch(error=>{
+                            consol.log(error);
+                            let message = "An Error occured while finalizaing successful verification.";
+                            res.redirect('/user/verified/error=true&message=${message}');                
+                        })
+                })
+                .catch(error=>{
+                    console.log(error);
+                    let message = "An Error occured while updation user record to show verified.";
+                    res.redirect('/user/verified/error=true&message=${message}');     
+                })
+
+        }else{
+            let message = "Invalid verification details passed.Check your inbox.";
+            res.redirect('/user/verified/error=true&message=${message}');
+    
+        }
+    })
+    .catch(error=>{
+        let message = "An error occured while comparing unique strings.";
+        res.redirect('/user/verified/error=true&message=${message}');
+    
+    }) 
+             }
+            }else{
+                let message ="Account record does not exist or has been verified already.please sign up or login ";
+                res.redirect('/user/verified/error=true&message=${message}');
+            }
+          })
+          .catch((error)=>{
+            console.log(error);
+        let message ="An error occurred while checking for existing user verification record";
+        res.redirect("/user/verified/error=true&message=${message}");
+          })
+    } catch (error) {
+        res.status(400).send(error.message);
+
+    }
+}
+//verfiy page
+const verfied = async (req, res, next) =>{
+    try {
+   
+res.sendFile(path.join(__dirname,"./../view/verified.html"));
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+
+}
 const updateUser = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -144,6 +234,13 @@ const signin = (req,res,next)=>{
     console.log("// "+accessToken+" //");
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user)=>{
+       
+        if(!data[0].verified){
+            res.json({
+                status:"FAILED",
+                message:"Email hasnt been verified yet.Check your inbox."
+            });
+        }
         return res.status(200).json(user);
     })
     .catch(function (error){
@@ -155,6 +252,7 @@ const signin = (req,res,next)=>{
             return res.status(500).json({error:errorMessage});
         }
     })
+
 }
 const deleteUser = async (req, res, next) => {
     try {
@@ -221,5 +319,7 @@ module.exports = {
     signin,
     forgetPassword,
     get_User_By_Token,
+    verfiy,
+    verfied,
 }
 

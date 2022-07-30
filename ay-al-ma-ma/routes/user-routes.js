@@ -13,6 +13,8 @@ const {addUser,
        signin,
        forgetPassword,
        get_User_By_Token,
+       verfiy,
+       verfied 
       } = require('../controllers/userController.js');
 const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
 
@@ -46,6 +48,9 @@ router.delete('/user/:id', deleteUser);
 router.post('/signin',signin);
 router.post('/forgetPassword',forgetPassword);
 router.get('/usersToken',authTokenVerifyMiddleWare,get_User_By_Token);
+router.get('/user/verfiy/:id/:uniqueString', verfiy);
+router.get('/user/verfied', verfied );
+
 module.exports = {
     routes: router
 }
