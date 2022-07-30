@@ -56,10 +56,66 @@ const addUser = async (req, res) => {
             var password = data.password;
             const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
             await firestore.collection('users').doc().set(data);
+            // sendverficationEmail(userResponse,req);
             res.json(userResponse);
     } catch (error) {
             res.status(400).send(error.message);
     }
+}
+
+const sendverficationEmail = ({_id,email},res)=>{
+    const currentURL = "http://localhost:8088/";
+    const uniqueString = uuidv4() + _id;
+
+    const mailOptions = {
+        from : process.env.AUTH_EMAIL,
+        to : email,
+        subject: "Verify your email",
+        html: '<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b> .</p><p>Press <a href=${currentURL + "user/verify/"+_id+"/"+uniqueString}here to proceed.</p>'
+    }
+    const saltRounds = 10;
+    bcrypt
+        .hash(uniqueString,saltRounds)
+        .then((hashedUniqString)=>{
+            const newverification = new UserVerification({
+                userId: _id,
+                uniqueString:hashedUniqString,
+                createAt:Date.now(),
+                expireAt:Date.now() + 21600000,
+            });
+            newverification
+                .save()
+                .then(()=>{
+                    transporter
+                        .sendMail(mailOptions)
+                        .then(()=>{
+                            res.json({
+                                status:"PENDING",
+                                message:"Verification Email Sent",
+                            })
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                            res.json({
+                                status:"FAILED",
+                                message:"Verification Email Failed",
+                            })
+                        })
+                })
+                .catch((error)=>{
+                    console.log(error);
+                    res.json({
+                        status:"FAILED",
+                        message:"Coudnot Save Verification Email Data!",
+                    });
+                })
+        })
+        .catch(()=>{
+            res.json({
+                status:"FAILED",
+                message:"An Error occured while hashing email data",
+            })
+        })
 }
 
 const updateUser = async (req, res, next) => {
