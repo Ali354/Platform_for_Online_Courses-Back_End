@@ -80,6 +80,7 @@ const signin = (req,res,next)=>{
             email:"email is requires",
             password: "password is required",
         });
+        
     }
     const userr = {email : req.body.email, password : req.body.password}
     const accessToken = jwt.sign(userr, process.env.ACCESS_TOKEN_SECRET)
