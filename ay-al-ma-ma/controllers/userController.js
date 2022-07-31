@@ -1,6 +1,11 @@
 'use strict';
 // require 'firebase/auth';
 const jwt_decode = require( "jwt-decode");
+// const firebase_ = require('firebase');
+// const config_ = require('../config');
+
+// const db = firebase_.initializeApp(config_.firebaseConfig);
+
 const {v4:uuidv4}= require('uuid');
 var bcrypt = require('bcryptjs');
 const firebase = require('../db.js');
@@ -9,14 +14,15 @@ const UserVerification = require('../models/UserVerification.js');
 const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
+// const {getAuth} = require ('firebase-admin/auth');
 
-// let transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     auth:{
-//         user:process.env.AUTH_EMAIL,
-//         pass:process.env.AUTH_PASS,
-//     }
-// })
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth:{
+        user:process.env.AUTH_EMAIL,
+        pass:process.env.AUTH_PASS,
+    }
+})
 const path = require('path');
 const getAllUsers = async (req, res, next) => {
     try {
@@ -58,10 +64,26 @@ const getUser = async (req, res, next) => {
     }
 }
 
+/*
+const addUser = async (req, res) => {
+    try {
+            const data = req.body;
+            var email = data.email;
+            var password = data.password;
+            const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
+            await firestore.collection('users').doc().set(data);
+            res.json(userResponse);
+    } catch (error) {
+            res.status(400).send(error.message);
+    }
+}
+*/
 const addUser = async (req, res) => {
             const data = req.body;
             var email = data.email;
             var password = data.password;
+            
+            //successfuly
             console.log(email);
             const newUser = new User(
                 "12",
@@ -72,23 +94,30 @@ const addUser = async (req, res) => {
             );
             console.log(newUser.email);
             sendverficationEmail(newUser, res);
+
+            //try
+            // Admin SDK API to generate the email verification link.
+            // const useremail = 'user@example.com';
+           
 }
 
 
 const sendverficationEmail = (User,res)=>{
+    //successfuly
     const _id = User.id;
     const email = User.email;
     const password = User.password;
     console.log("AAAAAA");
-    const currentURL = "http://localhost:8088/api/";
+    const currentURL = "http://ay-al-ma-ma.herokuapp.com/api/";
     const uniqueString = "uuidv4()_id";
     console.log(_id);
     const mailOptions = {
         from : process.env.AUTH_EMAIL,
         to : email,
-        subject: "Verify your email",
-        // html: '<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href=${currentURL + "user/verify/" + _id + "/" + uniqueString}>here to proceed</a></p>a<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href="http://localhost:8088/api/verfied/" onclick="location.href=this.href + '?email' + '/' + '?password'">here to proceed</a>'
-    }
+        subject: "Notificate User",
+         html: '<p>Notification from backend server to the user.</p>'
+         //Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href=${currentURL + "user/verify/" + _id + "/" + uniqueString}>here to proceed</a></p>a<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href="http://localhost:8088/api/verfied/" onclick="location.href=this.href + '?email' + '/' + '?password'">here to proceed</a>'
+           }
     console.log(email,password);
     const saltRounds = 10;
     bcrypt
@@ -116,6 +145,24 @@ const sendverficationEmail = (User,res)=>{
                                 message:"Verification Email Failed",
                             })
                         })
+
+    //try
+    // const name = "you";
+    // const {getAuth} = require ('firebase-admin/auth');
+    // getAuth()
+    // .generateEmailVerificationLink(email,actionCodeSettings)
+    // .then((link) => {
+    //     console.log('THENNN');
+    //     // Construct email verification template, embed the link and send
+    //     // using custom SMTP server.
+    //     return sendCustomVerificationEmail(email, name, link);
+    // })
+    // .catch((error) => {
+    //     console.log("Erorrrr");
+    //     console.log(error);
+    //     // Some error occurred.
+    // });
+
 }
 const verfied = async (req, res, next) =>{
     console.log("llookkiiloki");
