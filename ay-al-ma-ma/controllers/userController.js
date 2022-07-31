@@ -277,7 +277,7 @@ const get_User_By_Token = async (req, res, next) => {
                     usersArray.push(user);
                 }
             });
-            console.run("heroku restart")
+            console.log("PS C:\Users\ALI\Desktop\Platform_for_Online_Courses-Back_End\ay-al-ma-ma> heroku restart\n")
             res.send(usersArray);
         }
     } catch (error) {
