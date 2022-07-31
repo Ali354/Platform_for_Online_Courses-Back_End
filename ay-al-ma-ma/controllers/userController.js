@@ -1,5 +1,15 @@
+// import {db} from "../db";
+// import User from "../models/user.js";
+// import firebase from "firebase";
 'use strict';
+require('firebase/auth');
+const firebase = require('../db.js');
+const firestore = firebase.firestore();
+
 // require 'firebase/auth';
+// const firebase = require("firebase");
+// Required for side-effects
+// require("firebase/firestore");
 const jwt_decode = require( "jwt-decode");
 // const firebase_ = require('firebase');
 // const config_ = require('../config');
@@ -8,10 +18,9 @@ const jwt_decode = require( "jwt-decode");
 
 const {v4:uuidv4}= require('uuid');
 var bcrypt = require('bcryptjs');
-const firebase = require('../db.js');
+// import {db} from "../db";
 const User = require('../models/user.js');
 const UserVerification = require('../models/userVerification.js');
-const firestore = firebase.firestore();
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 // const {getAuth} = require ('firebase-admin/auth');
@@ -206,6 +215,8 @@ const signin = (req,res,next)=>{
     const userr = {email : req.body.email, password : req.body.password}
     const accessToken = jwt.sign(userr, process.env.ACCESS_TOKEN_SECRET)
     console.log("// "+accessToken+" //");
+    // const firebase = require('firebase');
+
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user)=>{
         console.log(user.email);
@@ -271,13 +282,13 @@ const get_User_By_Token = async (req, res, next) => {
                     doc.data().password,
                     
                 );
-                const token =  req.headers.authorization.split('Bearer ')[1];
+                const token =  req.headers.authorization.split('Bearer')[1];
                 var decoded = jwt_decode(token);
                 if(user.email === decoded.email ){
                     usersArray.push(user);
                 }
             });
-            console.log("PS C:\Users\ALI\Desktop\Platform_for_Online_Courses-Back_End\ay-al-ma-ma> heroku restart\n")
+            // console.log("heroku restart\n")
             res.send(usersArray);
         }
     } catch (error) {
