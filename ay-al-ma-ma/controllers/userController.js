@@ -195,6 +195,7 @@ const updateUser = async (req, res, next) => {
 }
 
 const signin = (req,res,next)=>{
+    const data = req.body;
      console.log(req.body.email+" / "+req.body.password);
     if(!req.body.email ||  !req.body.password){
         return res.status(422).json({
