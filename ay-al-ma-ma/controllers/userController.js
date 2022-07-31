@@ -208,13 +208,13 @@ const signin = (req,res,next)=>{
     console.log("// "+accessToken+" //");
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user)=>{
-       
-        if(!data[0].verified){
-            res.json({
-                status:"FAILED",
-                message:"Email hasnt been verified yet.Check your inbox."
-            });
-        }
+        console.log(user.email);
+        // if(!data[0].verified){
+        //     res.json({
+        //         status:"FAILED",
+        //         message:"Email hasnt been verified yet.Check your inbox."
+        //     });
+        // }
         return res.status(200).json(user);
     })
     .catch(function (error){
