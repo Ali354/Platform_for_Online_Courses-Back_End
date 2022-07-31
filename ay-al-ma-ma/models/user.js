@@ -1,10 +1,10 @@
 class User {
-    constructor(id, userName, email, password,verified) {
+    constructor(id, userName, email, password) {
             this.id = id;
             this.userName = userName;
             this.email = email;
             this.password = password;
-            this.verified= verified;
+            // this.verified= verified;
             //role
     }
 }
