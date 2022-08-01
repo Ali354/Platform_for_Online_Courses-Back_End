@@ -31,7 +31,7 @@ var storage = multer.diskStorage({
         cb(null,Date.now()+path.extname(file.originalname))
     },
 });
-
+ 
 var upload = multer({storage:storage}).single('file');
 
 app.post('/file',(req,res)=>{
