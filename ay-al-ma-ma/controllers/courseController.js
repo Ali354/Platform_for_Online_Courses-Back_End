@@ -104,6 +104,10 @@ const deleteCourse = async (req, res, next) => {
     }
 }
 
+// const uploadFile = async (req,res,next)=>{
+
+// }
+
 module.exports = {
     getAllCourses,
     addCourse,
