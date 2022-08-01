@@ -39,7 +39,7 @@ app.post('/file',(req,res)=>{
         if(err){
             console.log(err);
         }
-        console.log(req.file.path);
+        console.log(req);
     })
 })
 
