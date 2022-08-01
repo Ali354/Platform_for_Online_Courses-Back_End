@@ -25,7 +25,7 @@ const path = require('path');
 
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
-        cb(null,"uploadedImages/");
+        cb(null,"uploadedImages");
     },
     filename:function(req,file,cb){
         cb(null,Date.now()+path.extname(file.originalname))
@@ -38,11 +38,12 @@ var upload = multer({storage:storage}).single('file');
 app.post('/file',(req,res)=>{
     upload(req,res,(err)=>{
         if(err){
+            console.log("000000000");
              console.log(err.message);
         }
-        // console.log(res);
+        console.log(res);
     })
-    // console.log("1212211212121");
+    console.log("1212211212121");
 })
 
 app.listen(Port_, () => console.log('App is listening on url http://localhost:' + Port_));
