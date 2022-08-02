@@ -1,23 +1,19 @@
 const express = require('express');
+const { getAllCourses } = require('../controllers/courseController.js');
 const {
     addLesson,
-    // getAllCourses,
-    // addCourse,
-    // getCourse,
-    // updateCourse,
-    // deleteCourse
+    deleteLesson,
+    getLesson,
+    getAllLessons
       } = require('../controllers/lessonController.js');
 const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
-
+ 
 const router = express.Router();
 
 router.post('/lesson',authTokenVerifyMiddleWare, addLesson);
-// router.get('/courses', getAllCourses);
-// router.get('/course/:id', getCourse);
-// router.put('/course/:id', updateCourse);
-// router.delete('/course/:id', deleteCourse);
-// router.post('/file',uploadFile)
-
+router.get('/lesson', getLesson);
+router.delete('/lesson', deleteLesson);
+router.get('/lessons',getAllLessons);
 
 
 module.exports = {

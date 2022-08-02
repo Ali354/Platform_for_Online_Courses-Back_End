@@ -9,7 +9,7 @@ const {
 const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
  
 const router = express.Router();
-
+ 
 router.post('/course',authTokenVerifyMiddleWare, addCourse);
 router.get('/courses', getAllCourses);
 router.get('/course/:id', getCourse);
