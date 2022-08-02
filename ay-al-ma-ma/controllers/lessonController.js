@@ -2,14 +2,14 @@
 const jwt_decode = require( "jwt-decode");
 
 var firebase = require('../db.js');
-const Course = require('../models/lesson.js');
+const Lesson = require('../models/lesson.js');
 const firestore = firebase.firestore();
 
 const addLesson = async (req, res) => {
-    // console.log("!@#$%");
+    console.log("!@#$%");
     try {
             const data = req.body;
-             
+
             const lesson = new Lesson(
                 data.Course_id,
                 data.title,
