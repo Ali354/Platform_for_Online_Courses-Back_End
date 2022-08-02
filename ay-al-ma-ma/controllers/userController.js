@@ -219,7 +219,7 @@ const signin = (req,res,next)=>{
 
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user)=>{
-        console.log(user.email);
+        console.log("fffff"+user.email);
         // if(!data[0].verified){
         //     res.json({
         //         status:"FAILED",
