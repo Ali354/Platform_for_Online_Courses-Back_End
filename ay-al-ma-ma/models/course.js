@@ -8,5 +8,5 @@ class Course {
             this.owner_id = owner_id;
     }
 }
-
+ 
 module.exports = Course;
