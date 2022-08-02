@@ -99,42 +99,12 @@ const getLesson = async (req, res, next) => {
 }
 
 
-const getAllLessons = async (req, res, next) => {
-    // console.log('GetAllCourses is HERE!');
-    try {
-        const course_id = req.body.courseId;
-        const lessons = await firestore.collection('courses').doc(course_id).collection('lessons');
-        const data = await lessons.get();
-        const lessonsArray = [];
-        if(data.empty) {
-            res.status(404).send('No course record found');
-        }else {
-            data.forEach(doc => {
-                const lesson = new Lesson(
-                    doc.id,
-                    doc.data().Course_id,
-                    doc.data().title,
-                    doc.data().description,
-                    doc.data().lessonsNum,
-                    doc.data().defTime,
-                    doc.data().owner_id
-                );
-                lessonsArray.push(lesson);
-            });
-            res.send(lessonsArray);
-        }
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-
-
 module.exports = {
     getAllLessons,
     addLesson,
     deleteLesson,
     getLesson,
-    getAllLessons
+    getAllLessons,
     // getCourse,
     updateLesson
     // deleteCourse
