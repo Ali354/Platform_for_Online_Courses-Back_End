@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const config = require('./config.js');
 const userRoutes = require('./routes/user-routes.js');
 const courseRoutes = require('./routes/course-routes.js');
+const lessonRoutes = require('./routes/lesson-routes.js');
+
 const multer = require('multer');
 const app = express();
 
@@ -17,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use('/api', userRoutes.routes);
 app.use('/api', courseRoutes.routes);
+app.use('/api', lessonRoutes.routes);
 
 app.use(express.static('uploadedImages'));
 
@@ -31,7 +34,7 @@ var storage = multer.diskStorage({
         cb(null,Date.now()+path.extname(file.originalname))
     },
 });
- 
+  
 var upload = multer({storage:storage}).single('file');
 
 

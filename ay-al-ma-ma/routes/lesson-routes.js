@@ -11,7 +11,7 @@ const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserV
 
 const router = express.Router();
 
-router.post('/lesson', addLesson);
+router.post('/lesson',authTokenVerifyMiddleWare, addLesson);
 // router.get('/courses', getAllCourses);
 // router.get('/course/:id', getCourse);
 // router.put('/course/:id', updateCourse);
