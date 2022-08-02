@@ -28,6 +28,45 @@ const addLesson = async (req, res) => {
             res.status(400).send(error.message);
     }
 }
+const updateLesson = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const lesson =  await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(id);
+        await lesson.update(data);
+        res.send('Lesson record updated successfuly');      
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+const getAllLessons = async (req, res, next) => {
+    
+    const  course_id= req.params. course_id;
+    console.log('GetAllLessons is HERE!');
+    try {
+        const lessons = await firestore.collection('courses').doc( course_id).collection('lessons');
+        const data = await lessons.get();
+        const lessonsArray = [];
+        if(data.empty) {
+            res.status(404).send('No lessons record found');
+        }else {
+            data.forEach(doc => {
+                const lesson = new Lesson(
+                    doc.id,
+                    doc.data().title,
+                    doc.data().description,
+                    doc.data().lessonsNum,
+                    doc.data().defTime
+                );
+                lessonsArray.push(lesson);
+            });
+            res.send(lessonsArray);
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 
 const deleteLesson =  async (req, res, next) => {
     try {
@@ -91,12 +130,12 @@ const getAllLessons = async (req, res, next) => {
 
 
 module.exports = {
-   // getAllCourses,
+    getAllLessons,
     addLesson,
     deleteLesson,
     getLesson,
     getAllLessons
     // getCourse,
-    // updateCourse,
+    updateLesson
     // deleteCourse
 }
