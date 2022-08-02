@@ -41,10 +41,10 @@ const updateLesson = async (req, res, next) => {
 }
 const getAllLessons = async (req, res, next) => {
     
-    const  course_id= req.params. course_id;
+    const  course_id= req.params.course_id;
     console.log('GetAllLessons is HERE!');
     try {
-        const lessons = await firestore.collection('courses').doc( course_id).collection('lessons');
+        const lessons = await firestore.collection('courses').doc(course_id).collection('lessons');
         const data = await lessons.get();
         const lessonsArray = [];
         if(data.empty) {
