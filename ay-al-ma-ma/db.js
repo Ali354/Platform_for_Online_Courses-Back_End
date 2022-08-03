@@ -8,4 +8,4 @@ const db2 = admin.initializeApp(config.firebaseConfig);
 module.exports = db;
 // module.exports = { 
 //     db
-// }
+// }  
