@@ -49,7 +49,8 @@ app.post('/file',(req,res)=>{
             console.log("000000000");
             res.send(err);
         }
-        else{console.log("res");
+        else{
+        console.log("res");
         res.send("File Uploaded Successfully!");
     }})
     console.log("12zzzzzz121");
