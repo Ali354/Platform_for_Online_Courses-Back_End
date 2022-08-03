@@ -40,7 +40,7 @@ var storage = multer.diskStorage({
   
 var upload = multer({storage:storage}).single('file');
 
-  
+    
 app.post('/file',(req,res)=>{
     // console.log("1");
     
@@ -52,9 +52,7 @@ app.post('/file',(req,res)=>{
         else{
         // console.log("res");
         res.send("File Uploaded Successfully!");
-        return;
     }})
-    return;
     // console.log("12zzzzzz121");
 })
 
