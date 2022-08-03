@@ -27,11 +27,14 @@ const Port_ = process.env.PORT || config.port
 const path = require('path');
 
 var storage = multer.diskStorage({
+    // console.log("2"),
     destination:function(req,file,cb){
         cb(null,"uploadedImages");
+        console.log('2');
     },
     filename:function(req,file,cb){
-        cb(null,Date.now()+path.extname(file.originalname))
+        cb(null,Date.now()+path.extname(file.originalname));
+        console.log("3");
     },
 });
   
@@ -39,14 +42,17 @@ var upload = multer({storage:storage}).single('file');
 
 
 app.post('/file',(req,res)=>{
+    console.log("1");
+    
     upload(req,res,(err)=>{
         if(err){
             console.log("000000000");
-             console.log(err.message);
+             console.log(err);
         }
-        console.log(res);
+        console.log("res");
+        res.send("File Uploaded Successfully");
     })
-    console.log("1212211212121");
+    console.log("12zzzzzz121");
 })
 
 app.listen(Port_, () => console.log('App is listening on url http://localhost:' + Port_));
