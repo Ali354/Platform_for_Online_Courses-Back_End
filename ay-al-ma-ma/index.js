@@ -30,11 +30,11 @@ var storage = multer.diskStorage({
     // console.log("2"),
     destination:function(req,file,cb){
         cb(null,"uploadedImages");
-        console.log('2');
+        // console.log('2');
     },
     filename:function(req,file,cb){
         cb(null,Date.now()+path.extname(file.originalname));
-        console.log("3");
+        // console.log("3");
     },
 });
   
@@ -42,18 +42,20 @@ var upload = multer({storage:storage}).single('file');
 
   
 app.post('/file',(req,res)=>{
-    console.log("1");
+    // console.log("1");
     
     upload(req,res,(err)=>{
         if(err){
-            console.log("000000000");
+            // console.log("000000000");
             res.send(err);
         }
         else{
-        console.log("res");
+        // console.log("res");
         res.send("File Uploaded Successfully!");
+        return;
     }})
-    console.log("12zzzzzz121");
+    return;
+    // console.log("12zzzzzz121");
 })
 
 app.listen(Port_, () => console.log('App is listening on url http://localhost:' + Port_));
