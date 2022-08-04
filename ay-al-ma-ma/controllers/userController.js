@@ -88,6 +88,7 @@ const addUser = async (req, res) => {
 }
 */
 const addUser = async (req, res) => {
+    try{
             const data = req.body;
             var email = data.email;
             var password = data.password;
@@ -102,11 +103,22 @@ const addUser = async (req, res) => {
                 false,
             );
             console.log(newUser.email);
+            // const data = req.params;
+            // var email = data.email;
+            // var password = data.password;
+            console.log(email,password);
+            verfied(req,res);
             sendverficationEmail(newUser, res);
 
+            // const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
+            // await firestore.collection('users').doc().set(data);
+            // res.json(userResponse);
             //try
             // Admin SDK API to generate the email verification link.
             // const useremail = 'user@example.com';
+    }catch(error){
+        res.json(error.message);
+    }
            
 }
 
@@ -142,17 +154,17 @@ const sendverficationEmail = (User,res)=>{
                 .sendMail(mailOptions)
                 .then(()=>{
                     console.log("CCCCCC");
-                    res.json({
-                        status:"PENDING",
-                        message:"Verification Email Sent",
-                    });
+                    // res.json({
+                    //     status:"PENDING",
+                    //     message:"Verification Email Sent",
+                    // });
                         })
                         .catch((error)=>{
                             console.log(error);
-                            res.json({
-                                status:"FAILED",
-                                message:"Verification Email Failed",
-                            })
+                            // res.json({
+                            //     status:"FAILED",
+                            //     message:"Verification Email Failed",
+                            // })
                         })
 
     //try
@@ -177,16 +189,17 @@ const verfied = async (req, res, next) =>{
     console.log("llookkiiloki");
     try {
     console.log("Verified");
-    const data = req.params;
+    const data = req.body;
     var email = data.email;
     var password = data.password;
     console.log(email,password);
     const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
     await firestore.collection('users').doc().set(data);
     res.json(userResponse);
-    res.sendFile(path.join(__dirname,"./../view/verified.html"));
+    // res.sendFile(path.join(__dirname,"./../view/verified.html"));
     } catch (error) {
-        res.status(400);
+        // res.status(400);
+        res.json(error.message);
         console.log(error);
     }
 }
