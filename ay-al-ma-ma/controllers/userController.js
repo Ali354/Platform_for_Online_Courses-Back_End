@@ -89,26 +89,27 @@ const addUser = async (req, res) => {
 */
 const addUser = async (req, res) => {
     try{
+        
             const data = req.body;
             var email = data.email;
             var password = data.password;
             
             //successfuly
             console.log(email);
-            const newUser = new User(
-                "12",
-                "qwasqwas",
-                email,
-                password,
-                false,
-            );
-            console.log(newUser.email);
+            // const newUser = new User(
+            //     "12",
+            //     "qwasqwas",
+            //     email,
+            //     password,
+            //     false,
+            // );
+            // console.log(newUser.email);
             // const data = req.params;
             // var email = data.email;
             // var password = data.password;
             console.log(email,password);
             verfied(req,res);
-            sendverficationEmail(newUser, res);
+            // sendverficationEmail(newUser, res);
 
             // const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
             // await firestore.collection('users').doc().set(data);
@@ -309,6 +310,7 @@ const get_User_By_Token = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
+
 
 
 module.exports = {
