@@ -22,7 +22,7 @@ app.use('/api', courseRoutes.routes);
 app.use('/api', lessonRoutes.routes);
 app.use('/api', fileRoutes.routes);
 
-app.use(express.static('uploadedImages'));
+// app.use(express.static('uploadedImages'));
 
 const Port_ = process.env.PORT || config.port
 // const path = require('path');
