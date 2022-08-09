@@ -21,7 +21,9 @@ const getAllCourses = async (req, res, next) => {
                     doc.data().title,
                     doc.data().description,
                     doc.data().lessonsNum,
-                    doc.data().defTime
+                    doc.data().defTime,
+                    doc.data().owner_id,
+                    doc.data().imgURL
                 );
                 coursesArray.push(course);
             });

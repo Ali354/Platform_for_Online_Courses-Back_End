@@ -16,6 +16,7 @@ const jwt_decode = require( "jwt-decode");
 
 // const db = firebase_.initializeApp(config_.firebaseConfig);
 
+
 const {v4:uuidv4}= require('uuid');
 var bcrypt = require('bcryptjs');
 // import {db} from "../db";
@@ -47,7 +48,8 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().userName,
                     doc.data().email,
                     doc.data().password,
-                    
+                    doc.data().roleName,
+                    doc.data().imgURL
                 );
                 usersArray.push(user);
             });
@@ -206,7 +208,7 @@ const verfied = async (req, res, next) =>{
 }
 const updateUser = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.body.id;
         const data = req.body;
         await firebase.auth().createUserWithEmailAndPassword(req.body.email,req.body.password);
         const user =  await firestore.collection('users').doc(id);
@@ -282,6 +284,7 @@ const forgetPassword = async(req,res)=>{
 }
 
 const get_User_By_Token = async (req, res, next) => {
+    console.log("getUserByToken")
     try {
         const users = await firestore.collection('users');
         const data = await users.get();
@@ -295,11 +298,15 @@ const get_User_By_Token = async (req, res, next) => {
                     doc.data().userName,
                     doc.data().email,
                     doc.data().password,
-                    
+                    doc.data().roleName,
+                    doc.data().imgURL
                 );
                 const token =  req.headers.authorization.split('Bearer')[1];
                 var decoded = jwt_decode(token);
-                if(user.email === decoded.email ){
+                console.log("User Email:"+(user.email).toLowerCase());
+                console.log("Token Email:"+decoded.email);
+
+                if((user.email).toLowerCase() === decoded.email ){
                     usersArray.push(user);
                 }
             });
@@ -312,6 +319,35 @@ const get_User_By_Token = async (req, res, next) => {
 }
 
 
+// const findUsersMatchingEmail = async (req, res, next) => {
+//         try {
+//             const users = await firestore.collection('users');
+//             const data = await users.get();
+//             const usersArray = [];
+//             if(data.empty) {
+//                 res.status(404).send('No user record found');
+//             }else {
+//                 data.forEach(doc => {
+//                     const user = new User(
+//                         doc.id,
+//                         doc.data().userName,
+//                         doc.data().email,
+//                         doc.data().password,
+                        
+//                     );
+//                     const token =  req.headers.authorization.split('Bearer')[1];
+//                     var decoded = jwt_decode(token);
+//                     if(user.email === decoded.email ){
+//                         usersArray.push(user);
+//                     }
+//                 });
+//                 // console.log("heroku restart\n")
+//                 res.send(usersArray);
+//             }
+//         } catch (error) {
+//             res.status(400).send(error.message);
+//         }
+// }
 
 module.exports = {
     addUser,
@@ -323,6 +359,6 @@ module.exports = {
     forgetPassword,
     get_User_By_Token,
     // verfiy,
-    verfied,
+    verfied
 }
 
