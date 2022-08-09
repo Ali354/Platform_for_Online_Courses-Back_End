@@ -8,7 +8,8 @@ const config = require('./config.js');
 const userRoutes = require('./routes/user-routes.js');
 const courseRoutes = require('./routes/course-routes.js');
 const lessonRoutes = require('./routes/lesson-routes.js');
-const fileRoutes = require('./routes/file-routes')
+const fileRoutes = require('./routes/file-routes');
+var path = require('path');
 // const multer = require('multer');
 const app = express();
 
@@ -17,12 +18,17 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+
+app.use(express.static('public')); 
+app.use('/uploadedImages', express.static('uploadedImages'));
+
+// app.use(express.static(path.join("uploadedImages", 'public')));
 app.use('/api', userRoutes.routes);
 app.use('/api', courseRoutes.routes);
 app.use('/api', lessonRoutes.routes);
 app.use('/api', fileRoutes.routes);
 
-// app.use(express.static('uploadedImages'));
+// app.use(express.static("uploadedImages"));
 
 const Port_ = process.env.PORT || config.port
 // const path = require('path');
