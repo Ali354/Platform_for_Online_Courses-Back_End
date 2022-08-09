@@ -5,7 +5,7 @@
 require('firebase/auth');
 const firebase = require('../db.js');
 const firestore = firebase.firestore();
-
+const {getAuth} = require ('firebase-admin/auth');
 // require 'firebase/auth';
 // const firebase = require("firebase");
 // Required for side-effects
@@ -211,7 +211,7 @@ const updateUser = async (req, res, next) => {
     try {
         const id = req.body.id;
         const data = req.body;
-        await firebase.auth().createUserWithEmailAndPassword(req.body.email,req.body.password);
+        // await getAuth().updateUser(id,{email:req.body.email,password:req.body.password});
         const user =  await firestore.collection('users').doc(id);
         await user.update(data);
         res.send({"ookk":true});      

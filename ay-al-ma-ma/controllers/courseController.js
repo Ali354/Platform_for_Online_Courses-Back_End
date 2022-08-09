@@ -21,7 +21,9 @@ const getAllCourses = async (req, res, next) => {
                     doc.data().title,
                     doc.data().description,
                     doc.data().lessonsNum,
-                    doc.data().defTime
+                    doc.data().defTime,
+                    doc.data().owner_id,
+                    doc.data().imgURL
                 );
                 coursesArray.push(course);
             });
@@ -82,7 +84,7 @@ const getCourse = async (req, res, next) => {
 
 const updateCourse = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.body.id;
         const data = req.body;
         const course =  await firestore.collection('courses').doc(id);
         await course.update(data);
