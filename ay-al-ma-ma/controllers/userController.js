@@ -48,7 +48,8 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().userName,
                     doc.data().email,
                     doc.data().password,
-                    
+                    doc.data().roleName,
+                    doc.data().imgURL
                 );
                 usersArray.push(user);
             });
@@ -206,13 +207,14 @@ const verfied = async (req, res, next) =>{
     }
 }
 const updateUser = async (req, res, next) => {
+    console.log("UpdateUser is running");
     try {
         const id = req.body.id;
         const data = req.body;
         await firebase.auth().createUserWithEmailAndPassword(req.body.email,req.body.password);
         const user =  await firestore.collection('users').doc(id);
         await user.update(data);
-        res.send('User record updated successfuly');      
+        res.send({"ookk":true});      
     } catch (error) {
         res.status(400).send(error.message);
     }
