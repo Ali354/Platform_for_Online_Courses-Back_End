@@ -47,6 +47,8 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().userName,
                     doc.data().email,
                     doc.data().password,
+                    doc.data().roleName,
+                    doc.data().imgURL
                     
                 );
                 usersArray.push(user);
@@ -234,7 +236,7 @@ const signin = (req,res,next)=>{
 
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user)=>{
-        console.log("fffff"+user.email);
+       // console.log("fffff"+user.email);
         // if(!data[0].verified){
         //     res.json({
         //         status:"FAILED",
