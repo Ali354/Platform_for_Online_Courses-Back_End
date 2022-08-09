@@ -47,6 +47,7 @@ router.delete('/user/:id', deleteUser);
 router.post('/signin',signin);
 router.post('/forgetPassword',forgetPassword);
 router.get('/usersToken',authTokenVerifyMiddleWare,get_User_By_Token);
+router.get('/userByEmail',get_User_By_Token);
 // router.get('/user/verfiy/:id/:uniqueString', verfiy);
 // router.get('/verfied/:email/:password', verfied );
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-    addUser
+    addUser, updateUser
     // 
    } = require('../controllers/userController.js');
    
@@ -17,6 +17,7 @@ const router = express.Router();
 
 router.post('/addUserWithfile',uploadFile,addUser );
 router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse);
+router.put('/updateUserWithFile',uploadFile,updateUser);
 module.exports = {
     routes: router
 }
