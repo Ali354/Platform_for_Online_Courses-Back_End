@@ -11,6 +11,7 @@ const {
    } = require('../controllers/courseController');
 const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
 const {uploadFile} = require('../controllers/fileController');
+const { addLesson, updateLesson } = require('../controllers/lessonController.js');
 const router = express.Router();
 
 /////
@@ -18,8 +19,12 @@ const router = express.Router();
 
 router.post('/addUserWithfile',uploadFile,addUser );
 router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse);
+router.post('/addLessonWithfile',uploadFile,addLesson );
+
+
 router.put('/updateUserWithFile',uploadFile,updateUser);
 router.put('/updateCourseWithFile',uploadFile,updateCourse);
+router.put('/updateLessonWithFile',uploadFile,updateLesson);
 
 module.exports = {
     routes: router
