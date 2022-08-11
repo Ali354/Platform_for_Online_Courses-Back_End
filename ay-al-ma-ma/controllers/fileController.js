@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
     },
     filename:function(req,file,cb){
         URL = ( Date.now()+path.extname(file.originalname));
-        cb(null,Date.now()+path.extname(file.originalname));
+        cb(null,URL);
         // console.log("3");
     },
 });

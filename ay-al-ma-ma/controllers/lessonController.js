@@ -13,7 +13,8 @@ const addLesson = async (req, res) => {
                 data.Course_id,
                 data.title,
                 data.description,
-                data.defTime
+                data.defTime,
+                data.imgURL
             );
             const token =  req.headers.authorization.split('Bearer ')[1];
             var decoded = jwt_decode(token);
@@ -30,7 +31,7 @@ const addLesson = async (req, res) => {
 }
 const updateLesson = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.body.id;
         const data = req.body;
         const lesson =  await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(id);
         await lesson.update(data);
@@ -41,7 +42,7 @@ const updateLesson = async (req, res, next) => {
 }
 const getAllLessons = async (req, res, next) => {
     
-    const  course_id= req.params.course_id;
+    const  course_id= req.body.course_id;
     console.log('GetAllLessons is HERE!');
     try {
         const lessons = await firestore.collection('courses').doc(course_id).collection('lessons');
@@ -56,7 +57,9 @@ const getAllLessons = async (req, res, next) => {
                     doc.data().title,
                     doc.data().description,
                     doc.data().lessonsNum,
-                    doc.data().defTime
+                    doc.data().defTime,
+                    doc.data().Course_id,
+                    doc.data().imgURL
                 );
                 lessonsArray.push(lesson);
             });
@@ -66,8 +69,6 @@ const getAllLessons = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
-
-
 const deleteLesson =  async (req, res, next) => {
     try {
         const data = req.body;
