@@ -10,7 +10,7 @@ const multer = require('multer');
 const path = require('path');
 
 const { nextTick } = require("process");
-URL = "";
+ URL = "";
 var storage = multer.diskStorage({
     // console.log("2"),
     destination:function(req,file,cb){
