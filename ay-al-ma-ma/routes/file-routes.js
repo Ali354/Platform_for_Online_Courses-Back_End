@@ -19,12 +19,12 @@ const router = express.Router();
 
 router.post('/addUserWithfile',uploadFile,addUser );
 router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse);
-router.post('/addLessonWithfile',uploadFile,addLesson );
+router.post('/addLessonWithfile',authTokenVerifyMiddleWare,uploadFile,addLesson );
 
 
 router.put('/updateUserWithFile',uploadFile,updateUser);
 router.put('/updateCourseWithFile',uploadFile,updateCourse);
-router.put('/updateLessonWithFile',uploadFile,updateLesson);
+router.put('/updateLessonWithFile/:course_id',uploadFile,updateLesson);
 
 module.exports = {
     routes: router

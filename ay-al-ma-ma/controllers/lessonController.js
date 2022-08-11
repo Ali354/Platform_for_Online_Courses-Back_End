@@ -31,7 +31,7 @@ const addLesson = async (req, res) => {
 }
 const updateLesson = async (req, res, next) => {
     try {
-        const id = req.body.id;
+        const id = req.params.id;
         const data = req.body;
         const lesson =  await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(id);
         await lesson.update(data);
@@ -42,7 +42,7 @@ const updateLesson = async (req, res, next) => {
 }
 const getAllLessons = async (req, res, next) => {
     
-    const  course_id= req.body.course_id;
+    const  course_id= req.params.course_id;
     console.log('GetAllLessons is HERE!');
     try {
         const lessons = await firestore.collection('courses').doc(course_id).collection('lessons');
