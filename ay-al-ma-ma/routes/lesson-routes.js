@@ -14,6 +14,7 @@ router.post('/lesson',authTokenVerifyMiddleWare, addLesson);
 router.get('/lesson', getLesson);
 router.delete('/lesson/:course_id/:lesson_id', deleteLesson);
 router.get('/lessons/:course_id',getAllLessons);
+router.get('/lesson/:course_id/:lesson_id',getLesson);
 
 module.exports = {
     routes: router
