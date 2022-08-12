@@ -3,6 +3,8 @@ const {
     addUser, updateUser
     // 
    } = require('../controllers/userController.js');
+  
+   const { addVideo } = require('../controllers/videoController.js');
    
 const {
     addCourse,
@@ -19,12 +21,12 @@ const router = express.Router();
 
 router.post('/addUserWithfile',uploadFile,addUser );
 router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse);
-router.post('/addLessonWithfile',authTokenVerifyMiddleWare,uploadFile,addLesson );
-
+router.post('/addLessonWithfile',uploadFile,addLesson );
+router.post('/addVideo',uploadFile,addVideo);
 
 router.put('/updateUserWithFile',uploadFile,updateUser);
 router.put('/updateCourseWithFile',uploadFile,updateCourse);
-router.put('/updateLessonWithFile/:course_id',uploadFile,updateLesson);
+router.put('/updateLessonWithFile/:lesson_id',uploadFile,updateLesson);
 
 module.exports = {
     routes: router

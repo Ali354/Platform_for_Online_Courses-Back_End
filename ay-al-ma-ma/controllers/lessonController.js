@@ -6,7 +6,7 @@ const Lesson = require('../models/lesson.js');
 const firestore = firebase.firestore();
 
 const addLesson = async (req, res) => {
-    console.log("!@#$%");
+    console.log("Add Lesson is running");
     try {
             const data = req.body;
             const lesson = new Lesson(
@@ -18,11 +18,8 @@ const addLesson = async (req, res) => {
             );
             const token =  req.headers.authorization.split('Bearer ')[1];
             var decoded = jwt_decode(token);
-            // console.log(token);
-            // console.log(data);
              data.owner_id = decoded.user_id;
-            //  console.log(data);
-            // await firestore.collection('courses').doc().set(Object.assign({}, course));
+           
             await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc().set(data);
             res.json("lesson added successfully");
     } catch (error) {
@@ -31,11 +28,11 @@ const addLesson = async (req, res) => {
 }
 const updateLesson = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.params.lesson_id;
         const data = req.body;
         const lesson =  await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(id);
         await lesson.update(data);
-        res.send('Lesson record updated successfuly');      
+        res.send({"ookk":true});      
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -54,11 +51,11 @@ const getAllLessons = async (req, res, next) => {
             data.forEach(doc => {
                 const lesson = new Lesson(
                     doc.id,
+                    doc.data().Course_id,
                     doc.data().title,
                     doc.data().description,
-                    doc.data().lessonsNum,
                     doc.data().defTime,
-                    doc.data().Course_id,
+                    doc.data().owner_id,
                     doc.data().imgURL
                 );
                 lessonsArray.push(lesson);
@@ -71,9 +68,9 @@ const getAllLessons = async (req, res, next) => {
 }
 const deleteLesson =  async (req, res, next) => {
     try {
-        const data = req.body;
-        const course_id = data.courseId;
-        const lesson_id = data.lessonId;
+        const data = req.params;
+        const course_id = data.course_id;
+        const lesson_id = data.lesson_id;
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         lesson.delete();
         res.send('Record deleted successfuly');
@@ -81,12 +78,12 @@ const deleteLesson =  async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
-
 const getLesson = async (req, res, next) => {
     try {
-        const data = req.body;
-        const course_id = data.courseId;
-        const lesson_id = data.lessonId;
+        const data = req.params;
+        const course_id = data.course_id;
+        const lesson_id = data.lesson_id;
+
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         const thisLesson = await lesson.get();
         if(!thisLesson.exists) {
@@ -99,6 +96,7 @@ const getLesson = async (req, res, next) => {
     }
 }
 
+// const getLessonByID = async 
 
 module.exports = {
     getAllLessons,

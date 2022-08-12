@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user-routes.js');
 const courseRoutes = require('./routes/course-routes.js');
 const lessonRoutes = require('./routes/lesson-routes.js');
 const fileRoutes = require('./routes/file-routes');
+const videoRoutes = require('./routes/video-routes');
 var path = require('path');
 // const multer = require('multer');
 const app = express();
@@ -27,7 +28,7 @@ app.use('/api', userRoutes.routes);
 app.use('/api', courseRoutes.routes);
 app.use('/api', lessonRoutes.routes);
 app.use('/api', fileRoutes.routes);
-
+app.use('/api', videoRoutes.routes);
 // app.use(express.static("uploadedImages"));
 
 const Port_ = process.env.PORT || config.port
