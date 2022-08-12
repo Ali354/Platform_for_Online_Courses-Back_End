@@ -54,13 +54,13 @@ const getAllLessons = async (req, res, next) => {
             data.forEach(doc => {
                 const lesson = new Lesson(
                     doc.id,
+                    doc.data().Course_id,
                     doc.data().title,
                     doc.data().description,
-                    doc.data().lessonsNum,
                     doc.data().defTime,
                     doc.data().Course_id,
                     doc.data().imgURL
-                );
+                ); 
                 lessonsArray.push(lesson);
             });
             res.send(lessonsArray);
@@ -71,9 +71,9 @@ const getAllLessons = async (req, res, next) => {
 }
 const deleteLesson =  async (req, res, next) => {
     try {
-        const data = req.body;
-        const course_id = data.courseId;
-        const lesson_id = data.lessonId;
+   
+        const course_id = req.params.course_id;
+        const lesson_id = req.params.lesson_id;
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         lesson.delete();
         res.send('Record deleted successfuly');
