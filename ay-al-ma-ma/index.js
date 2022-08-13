@@ -12,6 +12,22 @@ const fileRoutes = require('./routes/file-routes');
 const videoRoutes = require('./routes/video-routes');
 const docFileRoutes=require('./routes/docfile-routes.js');
 
+
+// const cloudinary = require("cloudinary").v2;
+
+// console.log(cloudinary.config().cloud_name);
+
+// cloudinary.uploader.upload("uploadedImages/1660309782634.mp4",{
+//   resource_type: "video",
+//   // raw
+// })
+// .then((result)=>{
+//   console.log("success",JSON.stringify(result,null,2));
+// })
+// .catch((error)=>{
+//   console.log("error",JSON.stringify(error,null,2));
+// })
+
 var path = require('path');
 // const multer = require('multer');
 const app = express();

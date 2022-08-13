@@ -52,12 +52,13 @@ const getAllVideos = async (req, res, next) => {
             data.forEach(doc => {
                 const video = new Video(
                     doc.id,
-                    doc.data().course_id,
+                    doc.data().Course_id,
                     doc.data().lesson_id,
                     doc.data().imgURL,
                     doc.data().title,
                 );
                 videosArray.push(video);
+                console.log(video);
             });
             res.send(videosArray);
         }
