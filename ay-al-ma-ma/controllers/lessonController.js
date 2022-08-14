@@ -67,10 +67,12 @@ const getAllLessons = async (req, res, next) => {
     }
 }
 const deleteLesson =  async (req, res, next) => {
+console.log ("vvvvvvvvvvvvvvvv");
     try {
-        const data = req.params;
-        const course_id = data.courseId;
-        const lesson_id = data.lessonId;
+        console.log(req.params.course_id);
+        console.log(req.params.lesson_id);
+        const course_id = req.params.course_id;
+        const lesson_id = req.params.lesson_id;
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         lesson.delete();
         res.send('Record deleted successfuly');
