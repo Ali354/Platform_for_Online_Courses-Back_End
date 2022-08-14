@@ -101,7 +101,7 @@ const deleteCourse = async (req, res, next) => {
         const id = req.params.id;
         const course = await firestore.collection('courses').doc(id);
         course.delete();
-        res.send('Record deleted successfuly');
+        res.send({"ookk":"true"});
     } catch (error) {
         res.status(400).send(error.message);
     }

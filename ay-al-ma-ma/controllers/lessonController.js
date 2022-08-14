@@ -21,7 +21,7 @@ const addLesson = async (req, res) => {
              data.owner_id = decoded.user_id;
            
             await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc().set(data);
-            res.json("lesson added successfully");
+            res.json({"ookk":"true"});
     } catch (error) {
             res.status(400).send(error.message);
     }
@@ -69,11 +69,11 @@ const getAllLessons = async (req, res, next) => {
 const deleteLesson =  async (req, res, next) => {
     try {
         const data = req.params;
-        const course_id = data.courseId;
-        const lesson_id = data.lessonId;
+        const course_id = data.course_id;
+        const lesson_id = data.lesson_id;
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         lesson.delete();
-        res.send('Record deleted successfuly');
+        res.send({"ookk":"true"});
     } catch (error) {
         res.status(400).send(error.message);
     }
