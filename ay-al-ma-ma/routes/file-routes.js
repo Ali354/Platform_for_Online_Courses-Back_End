@@ -18,6 +18,7 @@ const {
 const { authenticateToken, authTokenVerifyMiddleWare } = require('../Verify/UserVerfiy.js');
 const { uploadFile } = require('../controllers/fileController');
 const { addLesson, updateLesson } = require('../controllers/lessonController.js');
+const { uploadVideoToCloudinary } = require('../controllers/cloudinaryController');
 const router = express.Router();
 
 /////
@@ -26,8 +27,8 @@ const router = express.Router();
 router.post('/addUserWithfile',uploadFile,addUser );
 router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse);
 router.post('/addLessonWithfile',authTokenVerifyMiddleWare,uploadFile,addLesson );
-router.post('/addVideo',uploadFile,addVideo);
-router.post('/addDocFile', authTokenVerifyMiddleWare, uploadFile,addDocFile);
+router.post('/addVideo',uploadFile, uploadVideoToCloudinary, addVideo);
+router.post('/addDocFile', uploadFile,addDocFile);
 
 
 router.put('/updateUserWithFile',uploadFile,updateUser);

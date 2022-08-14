@@ -59,6 +59,7 @@ const getAllVideos = async (req, res, next) => {
                   
                 );
                 videosArray.push(video);
+                console.log(video);
             });
             res.send(videosArray);
         }

@@ -28,7 +28,7 @@ const addLesson = async (req, res) => {
 }
 const updateLesson = async (req, res, next) => {
     try {
-        const id = req.params.lesson_id;
+        const id = req.params.id;
         const data = req.body;
         const lesson =  await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(id);
         await lesson.update(data);
