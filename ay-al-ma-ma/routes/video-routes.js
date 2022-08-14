@@ -10,7 +10,7 @@ const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserV
 const router = express.Router();
 
 router.post('/video',addVideo);
-router.get('/videos/:course_id/:lesson_id',getAllVideos)
+router.get('/videos/:course_id/:lesson_id',getAllVideos);
 router.get('/video/:course_id/:lesson_id/:video_id',getVideoById)
 router.delete('/video/:course_id/:lesson_id/:video_id',deleteVideo);
 

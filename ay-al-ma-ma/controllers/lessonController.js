@@ -67,10 +67,18 @@ const getAllLessons = async (req, res, next) => {
     }
 }
 const deleteLesson =  async (req, res, next) => {
+console.log ("vvvvvvvvvvvvvvvv");
     try {
+<<<<<<< HEAD
         const data = req.params;
         const course_id = data.course_id;
         const lesson_id = data.lesson_id;
+=======
+        console.log(req.params.course_id);
+        console.log(req.params.lesson_id);
+        const course_id = req.params.course_id;
+        const lesson_id = req.params.lesson_id;
+>>>>>>> 02988234442dc3d98525a568ec1d4814a15f8683
         const lesson = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id);
         lesson.delete();
         res.send({"ookk":"true"});

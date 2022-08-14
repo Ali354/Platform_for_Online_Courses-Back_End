@@ -54,8 +54,9 @@ const getAllVideos = async (req, res, next) => {
                     doc.id,
                     doc.data().Course_id,
                     doc.data().lesson_id,
-                    doc.data().imgURL,
                     doc.data().title,
+                    doc.data().imgURL
+                  
                 );
                 videosArray.push(video);
                 console.log(video);

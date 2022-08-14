@@ -1,5 +1,5 @@
 class Video {
-    constructor(id,course_id, lesson_id,vidURL,title) {
+    constructor(id,course_id, lesson_id,title,vidURL) {
             this.id = id;
             this.course_id =course_id;
             this.lesson_id= lesson_id;
