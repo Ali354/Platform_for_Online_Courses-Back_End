@@ -59,7 +59,7 @@ const addCourse = async (req, res) => {
             
             await firestore.collection('courses').doc().set(data);
 
-            res.json("Course added successfully");
+            res.json({"ookk":"true"});
     } catch (error) {
             res.status(400).send(error.message);
     }
