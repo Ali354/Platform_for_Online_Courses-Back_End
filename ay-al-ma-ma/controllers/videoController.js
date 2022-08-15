@@ -31,7 +31,7 @@ const deleteVideo =  async (req, res, next) => {
         const video_id = data.video_id;
         const video = await firestore.collection('courses').doc(course_id).collection('lessons').doc(lesson_id).collection('videos').doc(video_id);
         video.delete();
-        res.send('Video deleted successfuly');
+        res.send({"ookk":"true"});
     } catch (error) {
         res.status(400).send(error.message);
     }
