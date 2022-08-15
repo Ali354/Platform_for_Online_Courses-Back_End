@@ -262,7 +262,7 @@ const deleteUser = async (req, res, next) => {
         const id = req.params.id;
         const user1 = await firestore.collection('users').doc(id);
         user1.delete();
-        res.send('Record deleted successfuly');
+        res.send({"ookk":"true"});
     } catch (error) {
         res.status(400).send(error.message);
     }
