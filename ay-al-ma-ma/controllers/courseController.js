@@ -23,7 +23,8 @@ const getAllCourses = async (req, res, next) => {
                     doc.data().lessonsNum,
                     doc.data().defTime,
                     doc.data().owner_id,
-                    doc.data().imgURL
+                    doc.data().imgURL,
+                    doc.data().category
                 );
                 coursesArray.push(course);
             });
@@ -107,6 +108,36 @@ const deleteCourse = async (req, res, next) => {
     }
 }
 
+const getCoursesByCaegory = async(req,res,next)=>{
+    try {
+        const category = req.params.category;
+        const courses = await firestore.collection('courses');
+        const data = await courses.get();
+        const coursesArray = [];
+        if(data.empty) {
+            res.status(404).send('No course record found');
+        }else {
+            data.forEach(doc => {
+                const course = new Course(
+                    doc.id,
+                    doc.data().title,
+                    doc.data().description,
+                    doc.data().lessonsNum,
+                    doc.data().defTime,
+                    doc.data().owner_id,
+                    doc.data().imgURL,
+                    doc.data().category,
+                );
+                if(course.category == category){
+                    coursesArray.push(course);
+                }
+            });
+            res.send(coursesArray);
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 // const uploadFile = async (req,res,next)=>{
 
 // }
@@ -116,5 +147,6 @@ module.exports = {
     addCourse,
     getCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getCoursesByCaegory
 }

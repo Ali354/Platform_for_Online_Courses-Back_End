@@ -4,7 +4,8 @@ const {
     addCourse,
     getCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getCoursesByCaegory
       } = require('../controllers/courseController.js');
 const { authenticateToken ,authTokenVerifyMiddleWare} = require('../Verify/UserVerfiy.js');
  
@@ -15,6 +16,7 @@ router.get('/courses', getAllCourses);
 router.get('/course/:id', getCourse);
 router.put('/course/:id', updateCourse);
 router.delete('/course/:id', deleteCourse);
+router.get('/coursesByCategory/:category',getCoursesByCaegory);
 // router.post('/file',uploadFile)
 
 
