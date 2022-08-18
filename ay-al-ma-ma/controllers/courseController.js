@@ -24,7 +24,8 @@ const getAllCourses = async (req, res, next) => {
                     doc.data().defTime,
                     doc.data().owner_id,
                     doc.data().imgURL,
-                    doc.data().category
+                    doc.data().category,
+                    doc.data().teacher_id
                 );
                 coursesArray.push(course);
             });
@@ -127,6 +128,7 @@ const getCoursesByCaegory = async(req,res,next)=>{
                     doc.data().owner_id,
                     doc.data().imgURL,
                     doc.data().category,
+                    doc.data().teacher_id
                 );
                 if(course.category == category){
                     coursesArray.push(course);
