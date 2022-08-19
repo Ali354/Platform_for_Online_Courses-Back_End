@@ -126,20 +126,20 @@ const addUser = async (req, res) => {
 }
 
 
-const sendverficationEmail = (User,res)=>{
+const sendEmailVideoFinished = (req,res)=>{
     //successfuly
-    const _id = User.id;
-    const email = User.email;
-    const password = User.password;
+    const _id = req.body.id;
+    const email = req.body.email;
+    const password = req.body.password;
     console.log("AAAAAA");
-    const currentURL = "http://ay-al-ma-ma.herokuapp.com/api/";
+    const currentURL = "http://localhost:8088/api/";
     const uniqueString = "uuidv4()_id";
     console.log(_id);
     const mailOptions = {
         from : process.env.AUTH_EMAIL,
         to : email,
         subject: "Notificate User",
-         html: '<p>Notification from backend server to the user.</p>'
+         html: '<p>Congratulations! Great job, you just finished a video.</p>'
          //Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href=${currentURL + "user/verify/" + _id + "/" + uniqueString}>here to proceed</a></p>a<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href="http://localhost:8088/api/verfied/" onclick="location.href=this.href + '?email' + '/' + '?password'">here to proceed</a>'
            }
     console.log(email,password);
@@ -157,17 +157,17 @@ const sendverficationEmail = (User,res)=>{
                 .sendMail(mailOptions)
                 .then(()=>{
                     console.log("CCCCCC");
-                    // res.json({
-                    //     status:"PENDING",
-                    //     message:"Verification Email Sent",
-                    // });
+                    res.json({
+                        status:"PENDING",
+                        message:"Verification Email Sent",
+                    });
                         })
                         .catch((error)=>{
                             console.log(error);
-                            // res.json({
-                            //     status:"FAILED",
-                            //     message:"Verification Email Failed",
-                            // })
+                            res.json({
+                                status:"FAILED",
+                                message:"Verification Email Failed",
+                            })
                         })
 
     //try
@@ -359,6 +359,7 @@ module.exports = {
     signin,
     forgetPassword,
     get_User_By_Token,
+    sendEmailVideoFinished,
     // verfiy,
     verfied
 }
