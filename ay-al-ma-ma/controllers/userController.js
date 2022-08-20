@@ -49,7 +49,8 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().email,
                     doc.data().password,
                     doc.data().roleName,
-                    doc.data().imgURL
+                    doc.data().imgURL,
+                    doc.data().points
                 );
                 usersArray.push(user);
             });
@@ -91,7 +92,7 @@ const addUser = async (req, res) => {
 */
 const addUser = async (req, res) => {
     try{
-        
+            req.body.points = 0;
             const data = req.body;
             var email = data.email;
             var password = data.password;
@@ -192,6 +193,7 @@ const verfied = async (req, res, next) =>{
     console.log("llookkiiloki");
     try {
     console.log("Verified");
+    // req.body.points = 0;
     const data = req.body;
     var email = data.email;
     var password = data.password;
@@ -300,7 +302,8 @@ const get_User_By_Token = async (req, res, next) => {
                     doc.data().email,
                     doc.data().password,
                     doc.data().roleName,
-                    doc.data().imgURL
+                    doc.data().imgURL,
+                    doc.data().points
                 );
                 const token =  req.headers.authorization.split('Bearer')[1];
                 var decoded = jwt_decode(token);
