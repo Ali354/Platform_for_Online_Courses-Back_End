@@ -131,7 +131,7 @@ const sendEmailVideoFinished = (req,res)=>{
     //successfuly
     const _id = req.body.id;
     const email = req.body.email;
-    const password = req.body.password;
+    // const password = req.body.password;
     console.log("AAAAAA");
     const currentURL = "http://localhost:8088/api/";
     const uniqueString = "uuidv4()_id";
@@ -143,7 +143,7 @@ const sendEmailVideoFinished = (req,res)=>{
          html: '<p>Congratulations! Great job, you just finished a video.</p>'
          //Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href=${currentURL + "user/verify/" + _id + "/" + uniqueString}>here to proceed</a></p>a<p>Verify your email address to complete the signup and login into your account.</p><p>this link <b>expired in 6 hours</b></p> <p>Press <a href="http://localhost:8088/api/verfied/" onclick="location.href=this.href + '?email' + '/' + '?password'">here to proceed</a>'
            }
-    console.log(email,password);
+    // console.log(email,password);
     const saltRounds = 10;
     bcrypt
         const newverification = new UserVerification({
