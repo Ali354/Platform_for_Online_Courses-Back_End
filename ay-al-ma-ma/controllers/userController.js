@@ -91,6 +91,7 @@ const addUser = async (req, res) => {
 }
 */
 const addUser = async (req, res) => {
+    console.log("Adduser");
     try{
             req.body.points = 0;
             const data = req.body;
@@ -200,7 +201,8 @@ const verfied = async (req, res, next) =>{
     console.log(email,password);
     const userResponse = await firebase.auth().createUserWithEmailAndPassword(email,password);
     await firestore.collection('users').doc().set(data);
-    res.json(userResponse);
+    // res.json(userResponse);
+    res.json({"ookk":"true"});
     // res.sendFile(path.join(__dirname,"./../view/verified.html"));
     } catch (error) {
         // res.status(400);

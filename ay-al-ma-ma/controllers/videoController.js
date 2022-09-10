@@ -17,7 +17,7 @@ const addVideo = async (req, res) => {
             //     data.title,
             // );
             await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(data.lesson_id).collection("videos").doc().set(data);
-            res.json("Video added successfully");
+            res.json({"ookk":"true"});
     } catch (error) {
             res.status(400).send(error.message);
     }

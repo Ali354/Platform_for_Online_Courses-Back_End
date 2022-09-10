@@ -43,8 +43,8 @@ transport.verify((error,success)=>{
 router.post('/user', addUser);
 router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
+router.put('/user',authTokenVerifyMiddleWare, updateUser);
+router.delete('/user/:id',authTokenVerifyMiddleWare, deleteUser);
 router.post('/signin',signin);
 router.post('/forgetPassword',forgetPassword);
 router.get('/usersToken',authTokenVerifyMiddleWare,get_User_By_Token);

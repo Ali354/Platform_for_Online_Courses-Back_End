@@ -29,12 +29,14 @@ router.post('/addCourseWithfile',authTokenVerifyMiddleWare,uploadFile,addCourse)
 router.post('/addLessonWithfile',authTokenVerifyMiddleWare,uploadFile,addLesson );
 
 router.post('/addVideo',uploadFile, uploadVideoToCloudinary, addVideo);
+
+
 router.post('/addDocFile', uploadFile,uploadFileToCloudinary,addDocFile);
 
 
-router.put('/updateUserWithFile',uploadFile,updateUser);
-router.put('/updateCourseWithFile',uploadFile,updateCourse);
-router.put('/updateLessonWithFile/:id',uploadFile,updateLesson);
+router.put('/updateUserWithFile',authTokenVerifyMiddleWare,uploadFile,updateUser);
+router.put('/updateCourseWithFile',authTokenVerifyMiddleWare,uploadFile,updateCourse);
+router.put('/updateLessonWithFile/:id',authTokenVerifyMiddleWare,uploadFile,updateLesson);
 
 module.exports = {
     routes: router

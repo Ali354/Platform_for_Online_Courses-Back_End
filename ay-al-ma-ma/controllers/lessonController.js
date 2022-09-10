@@ -8,14 +8,16 @@ const firestore = firebase.firestore();
 const addLesson = async (req, res) => {
     console.log("Add Lesson is running");
     try {
+        req.body.likes = 0;
+        req.body.disLikes = 0;
             const data = req.body;
-            const lesson = new Lesson(
-                data.Course_id,
-                data.title,
-                data.description,
-                data.defTime,
-                data.imgURL
-            );
+            // const lesson = new Lesson(
+            //     data.Course_id,
+            //     data.title,
+            //     data.description,
+            //     data.defTime,
+            //     data.imgURL
+            // );
             const token =  req.headers.authorization.split('Bearer ')[1];
             var decoded = jwt_decode(token);
              data.owner_id = decoded.user_id;
@@ -56,7 +58,9 @@ const getAllLessons = async (req, res, next) => {
                     doc.data().description,
                     doc.data().defTime,
                     doc.data().owner_id,
-                    doc.data().imgURL
+                    doc.data().imgURL,
+                    doc.data().likes,
+                    doc.data().disLikes,
                 ); 
                 lessonsArray.push(lesson);
             });

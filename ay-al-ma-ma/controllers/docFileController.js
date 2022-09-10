@@ -17,7 +17,7 @@ const addDocFile = async (req, res) => {
         //  console.log(data);
         // await firestore.collection('courses').doc().set(Object.assign({}, course));
         await firestore.collection('courses').doc(data.Course_id).collection("lessons").doc(data.lesson_id).collection('files').doc().set(data);
-        res.json("file added successfully");
+        res.json({"ookk":"true"});
     } catch (error) {
         res.status(400).send(error.message);
     }

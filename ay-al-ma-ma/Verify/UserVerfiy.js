@@ -39,7 +39,7 @@ const authTokenVerifyMiddleWare = (req,res,next)=>{
           next();
         })
         .catch((error) => {
-          res.send("!!! "+error.message);
+          res.send({ookk:"false"});
         });
       }
 }
